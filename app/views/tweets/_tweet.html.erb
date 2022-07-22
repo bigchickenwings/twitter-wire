@@ -7,6 +7,12 @@
     <%= link_to 'Show', tweet %>
     <%= link_to 'Edit', edit_tweet_path(tweet) %>
     <%= link_to 'Destroy', tweet, method: :delete, data: { confirm: 'Are you sure?' } %>
+    <br>
+    <%if tweet.likes.find_by(user: current_user) %>
+      <%= link_to "Unlike #{tweet.likes.count}", tweet_like_url(tweet, tweet.likes.find_by(user: current_user.id)), method: :delete %>
+    <% else %>
+      <%= link_to "Like #{tweet.likes.count}", tweet_likes_url(tweet), method: :post %>
+    <% end %>
     <hr/>
   </div>
 <% end %>

@@ -11,4 +11,14 @@ FactoryBot.define do
       association :user
     end
   end
+
+  factory :like do
+    trait :user do
+      association :user
+    end
+
+    trait :tweet do
+      association :tweet
+    end
+  end
 end
