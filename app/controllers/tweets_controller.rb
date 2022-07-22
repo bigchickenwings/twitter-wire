@@ -4,7 +4,7 @@ class TweetsController < ApplicationController
 
   # GET /tweets or /tweets.json
   def index
-    @tweets = Tweet.all.order(created_at: :desc)
+    @tweets = Tweet.all.includes(:likes).order(created_at: :desc)
     @tweet = Tweet.new
   end
 
@@ -14,7 +14,7 @@ class TweetsController < ApplicationController
 
   # GET /tweets/new
   def new
-    @tweet = current_user.tweets.new
+    @tweet = Tweet.new
   end
 
   # GET /tweets/1/edit
@@ -23,7 +23,8 @@ class TweetsController < ApplicationController
 
   # POST /tweets or /tweets.json
   def create
-    @tweet = current_user.tweets.new(tweet_params)
+    @tweet = Tweet.new(tweet_params)
+    @tweet.user = current_user
 
     respond_to do |format|
       if @tweet.save
